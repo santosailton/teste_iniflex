@@ -1,9 +1,8 @@
-package org.iniflex;
+package org.iniflex.model;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
-public abstract class Pessoa {
+public class Pessoa {
     private String nome;
     private LocalDate dataNascimento;
 
@@ -20,17 +19,8 @@ public abstract class Pessoa {
         return nome;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(LocalDate dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
-
-    public abstract int compareTo(Funcionario funcionario, Funcionario funcionario2);
 }

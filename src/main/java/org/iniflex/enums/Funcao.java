@@ -1,6 +1,7 @@
-package org.iniflex;
+package org.iniflex.enums;
 
 public enum Funcao {
+    //definição de FUNCAO em forma de ENUM para serem usadas facilmentes em outras possiveis classes
     OPERADOR("Operador"),
     COORDENADOR("Coordenador"),
     DIRETOR("Diretor"),
