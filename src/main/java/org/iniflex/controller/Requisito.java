@@ -1,6 +1,6 @@
 package org.iniflex.controller;
 
-import org.iniflex.enums.Funcao;
+import org.iniflex.factory.FuncionarioFactory;
 import org.iniflex.model.Funcionario;
 
 import java.math.BigDecimal;
@@ -20,19 +20,11 @@ public class Requisito {
     private Requisito() {
     }
     
-    public static void insereTodosFuncionarios() {
-        // inserção de funcionarios com adicional para uso da constante de ENUM para função
-        listaFuncionarios.add(new Funcionario("Maria", LocalDate.of(2000, 10, 18), new BigDecimal("2000.04"), Funcao.OPERADOR.getDescricao()));
-        listaFuncionarios.add(new Funcionario("João", LocalDate.of(1990, 5, 12), new BigDecimal("2284.38"), Funcao.OPERADOR.getDescricao()));
-        listaFuncionarios.add(new Funcionario("Caio", LocalDate.of(1961, 5, 2), new BigDecimal("9836.14"), Funcao.COORDENADOR.getDescricao()));
-        listaFuncionarios.add(new Funcionario("Miguel", LocalDate.of(1988, 10, 14), new BigDecimal("191198.88"), Funcao.DIRETOR.getDescricao()));
-        listaFuncionarios.add(new Funcionario("Alice", LocalDate.of(1995, 1, 5), new BigDecimal("2234.68"), Funcao.RECEPCIONISTA.getDescricao()));
-        listaFuncionarios.add(new Funcionario("Heitor", LocalDate.of(1999, 11, 19), new BigDecimal("1582.72"), Funcao.OPERADOR.getDescricao()));
-        listaFuncionarios.add(new Funcionario("Arthur", LocalDate.of(1993, 3, 31), new BigDecimal("4071.84"), Funcao.CONTADOR.getDescricao()));
-        listaFuncionarios.add(new Funcionario("Laura", LocalDate.of(1994, 7, 8), new BigDecimal("3017.45"), Funcao.GERENTE.getDescricao()));
-        listaFuncionarios.add(new Funcionario("Heloísa", LocalDate.of(2003, 5, 24), new BigDecimal("1606.85"), Funcao.ELETRICISTA.getDescricao()));
-        listaFuncionarios.add(new Funcionario("Helena", LocalDate.of(1996, 9, 2), new BigDecimal("2799.93"), Funcao.GERENTE.getDescricao()));
-
+    public static void adicionarFuncionario(FuncionarioFactory factory, String nome, LocalDate dataNascimento, BigDecimal salario) {
+        //adição de funcionario com uso de Factory Method para refatoração da FUNCAO e criação de objetos
+        //para caso houver mais FUNCOES ou validações especificas entre FUNCOES como salario de funcionario
+        Funcionario funcionario = factory.criarFuncionario(nome, dataNascimento, salario);
+        listaFuncionarios.add(funcionario);
     }
 
     public static void exibeFuncionarios() {
@@ -52,7 +44,7 @@ public class Requisito {
         // multiplicando com o método multiply da classe BigDecimal a adição de 10% (salario x 1.1)
         listaFuncionarios.stream()
                 .forEach(funcionario ->
-            funcionario.setSalario(funcionario.getSalario().multiply(new BigDecimal("1.1")))
+            funcionario.setSalario(funcionario.getSalario().multiply(BigDecimal.valueOf(1.1)))
         );
     }
 
@@ -134,7 +126,7 @@ public class Requisito {
     }
 
     public static void exibeQtdeSalarioMinimo() {
-        String divisor = "1212";
+        Integer divisor = 1212;
         System.out.println("3.12 - Exibindo quantidade de salários minimos por funcionário ");
 
         // loop lambda para percorrer salarios e dividir pelo valor de salário minimo definido na variavel "divisor"
@@ -143,7 +135,7 @@ public class Requisito {
         // e com arredondamento para cima da 2a casa decimal se valores >= 5 da 3a casa decimal
         // ou para baixo se <= 5 da terceira casa decimal
         listaFuncionarios.stream().forEach(funcionario -> {
-            BigDecimal res = funcionario.getSalario().divide(new BigDecimal(divisor), 2 , RoundingMode.HALF_UP);
+            BigDecimal res = funcionario.getSalario().divide(BigDecimal.valueOf(divisor), 2 , RoundingMode.HALF_UP);
             System.out.println("Nome: "+funcionario.getNome()+" ||"+"Salarios min: "+ res);
         });
     }
